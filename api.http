@@ -13,8 +13,8 @@ POST http://localhost:3333/events/81a3f6db-45bf-4a6f-b10c-bcaf8837ac43/attendees
 Content-Type: application/json
 
 {
-  "name": "Diego Fernandes",
-  "email": "diego2@rocketseat.com.br"
+  "name": "Andrelino Silva",
+  "email": "andrelino@andrelino.dev"
 }
 
 ###
