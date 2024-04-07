@@ -57,9 +57,9 @@ export async function getAllEvents(app: FastifyInstance) {
         },
       })
 
-      if (!events) {
-        throw new Error('No events not found')
-      }
+      // if (!events) {
+      //   throw new Error('No events not found')
+      // }
 
       return replay.send({
         events: events.map((event) => {

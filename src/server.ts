@@ -7,6 +7,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
+import { errorHandler } from './error-handler'
 import { checkIn } from './routes/check-in'
 import { createEvent } from './routes/create-event'
 import { getAllEvents } from './routes/get-all-events'
@@ -45,6 +46,8 @@ app.register(getEvent)
 app.register(getEventAttendees)
 app.register(attendeeBadge)
 app.register(checkIn)
+
+app.setErrorHandler(errorHandler)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('🔥 Server running on port 3333')
