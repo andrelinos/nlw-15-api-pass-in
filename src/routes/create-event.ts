@@ -10,6 +10,8 @@ export async function createEvent(app: FastifyInstance) {
     '/events',
     {
       schema: {
+        summary: 'Create an event',
+        tags: ['events'],
         body: z.object({
           title: z.string().min(4),
           details: z.string().nullable(),
@@ -51,7 +53,7 @@ export async function createEvent(app: FastifyInstance) {
         },
       })
 
-      return replay.send({ eventId: event.id })
+      return replay.status(201).send({ eventId: event.id })
     },
   )
 }
