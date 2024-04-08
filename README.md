@@ -26,13 +26,13 @@
 
 <hr> -->
 
-  [About](#dart-about) &#xa0; | &#xa0;
-  [Features](#sparkles-features) &#xa0; | &#xa0;
-  [Technologies](#rocket-technologies) &#xa0; | &#xa0;
-  [Requirements](#white_check_mark-requirements) &#xa0; | &#xa0;
-  [Starting](#checkered_flag-starting) &#xa0; | &#xa0;
-  [API Documentation](#api-documentation) &#xa0; | &#xa0;
-  [License](#memo-license) &#xa0; | &#xa0;
+  [Sobre](#dart-sobre) &#xa0; | &#xa0;
+  [Funcionalidades](#sparkles-funcionalidades) &#xa0; | &#xa0;
+  [Tecnologias](#rocket-tecnologias) &#xa0; | &#xa0;
+  [Requisitos](#white_check_mark-requisitos) &#xa0; | &#xa0;
+  [Iniciando](#checkered_flag-iniciando) &#xa0; | &#xa0;
+  [Documentation](#api-documentation) &#xa0; | &#xa0;
+  [Licença](#memo-licença) &#xa0; | &#xa0;
   <a href="https://github.com/andrelinos" target="_blank">Author</a>
 
 &#xa0;
@@ -127,6 +127,15 @@ npm run start
 # The server will initialize in the <http://localhost:3333>
 
 ```
+
+<div align="center">
+
+**Schema do banco de dados**
+  <img src="./prisma//erd//ERD.svg" alt="Nlw 15 Api Pass In" />
+
+  &#xa0;
+
+</div>
 
 ## API Documentation ##
 
