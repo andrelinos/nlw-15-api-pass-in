@@ -33,7 +33,7 @@
   [Iniciando](#checkered_flag-iniciando) &#xa0; | &#xa0;
   [Documentation](#api-documentation) &#xa0; | &#xa0;
   [Licença](#memo-licença) &#xa0; | &#xa0;
-  <a href="https://github.com/andrelinos" target="_blank">Author</a>
+  <a href="https://github.com/andrelinos" target="_blank">Autor</a>
 
 &#xa0;
 
