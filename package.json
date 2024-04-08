@@ -10,7 +10,8 @@
     "start": "node dist/server.js",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "postinstall": "npx prisma migrate dev && npx prisma generate"
   },
   "keywords": [],
   "author": "",
