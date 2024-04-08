@@ -1,0 +1,203 @@
+
+## pass.in API Documentation
+
+Welcome to the API documentation for the pass.in application backend. This API is built during the NLW Unite event by Rocketseat.
+
+### Base URL
+
+```
+https://api.passin.com
+```
+
+****
+
+### Authentication
+
+This API does not require authentication for now.
+
+### Events
+
+#### Create an Event
+
+```
+POST /events
+```
+
+**Summary:** Create a new event.
+
+**Request Body:**
+
+```json
+{
+  "title": "Example Event",
+  "details": "This is an example event",
+  "eventStart": "2024-04-07T09:00:00Z",
+  "eventFinish": "2024-04-07T17:00:00Z",
+  "maximumAttendees": 100
+}
+```
+
+**Response:**
+
+```json
+{
+  "eventId": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+#### Get All Events
+
+```
+GET /events
+```
+
+**Summary:** Retrieve all events.
+
+**Response:**
+
+```json
+{
+  "events": [
+    {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "title": "Example Event",
+      "slug": "example-event",
+      "details": "This is an example event",
+      "eventStart": "2024-04-07T09:00:00Z",
+      "eventFinish": "2024-04-07T17:00:00Z",
+      "maximumAttendees": 100,
+      "attendeesAmount": 10,
+      "attendees": [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "email": "john@example.com",
+          "createdAt": "2024-04-06T12:00:00Z",
+          "eventId": "123e4567-e89b-12d3-a456-426614174000"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+}
+```
+
+#### Get Event by ID
+
+```
+GET /events/{eventId}
+```
+
+**Summary:** Retrieve an event by ID.
+
+**Response:**
+
+```json
+{
+  "event": {
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Example Event",
+    "slug": "example-event",
+    "details": "This is an example event",
+    "eventStart": "2024-04-07T09:00:00Z",
+    "eventFinish": "2024-04-07T17:00:00Z",
+    "maximumAttendees": 100,
+    "attendeesAmount": 10
+  }
+}
+```
+
+#### Register an Attendee
+
+```
+POST /events/{eventId}/attendees
+```
+
+**Summary:** Register an attendee for an event.
+
+**Request Body:**
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+```
+
+**Response:**
+
+```json
+{
+  "attendeeId": 1
+}
+```
+
+#### Get Event Attendees
+
+```
+GET /events/{eventId}/attendees
+```
+
+**Summary:** Retrieve attendees for a specific event.
+
+**Response:**
+
+```json
+{
+  "attendees": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "createdAt": "2024-04-06T12:00:00Z",
+      "checkedInAt": "2024-04-07T09:30:00Z"
+    },
+    ...
+  ]
+}
+```
+
+### Attendees
+
+#### Get Attendee Badge
+
+```
+GET /attendees/{attendeeId}/badge
+```
+
+**Summary:** Retrieve attendee badge.
+
+**Response:**
+
+```json
+{
+  "badge": {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "eventTitle": "Example Event",
+    "eventStart": "2024-04-07T09:00:00Z",
+    "eventFinish": "2024-04-07T17:00:00Z",
+    "checkInURL": "https://api.passin.com/attendees/1/check-in"
+  }
+}
+```
+
+#### Check-in an Attendee
+
+```
+GET /attendees/{attendeeId}/check-in
+```
+
+**Summary:** Check-in an attendee.
+
+**Response:** 201 Created (No Content)
+
+### Additional Notes
+
+- All requests and responses are in JSON format.
+- Dates and times are represented in ISO 8601 format.
+- Attendees are registered with a unique attendee ID.
+- Events are identified by their unique event ID.
+
+Feel free to reach out if you have any questions or need further assistance!
