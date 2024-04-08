@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
-    "build-2": "tsup src --format esm",
+    "tsup:build": "tsup src --format esm",
     "build": "tsc",
     "start": "node dist/server.js",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "postinstall": "npx prisma migrate dev && npx prisma generate"
+    "postinstall": "npx prisma migrate dev && npx prisma generate && npx prisma db seed"
   },
   "keywords": [],
   "author": "",

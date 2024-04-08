@@ -17,7 +17,5 @@ export const errorHandler: FastifyErrorHandler = (error, request, replay) => {
     return replay.status(400).send({ message: error.message })
   }
 
-  return replay
-    .status(500)
-    .send({ message: 'Internal server error' + error.message })
+  return replay.status(500).send({ message: 'Internal server error' })
 }
