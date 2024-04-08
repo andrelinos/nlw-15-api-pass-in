@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
-    "build": "tsup src --format esm",
-    "start": "node dist/server.mjs",
+    "build-2": "tsup src --format esm",
+    "build": "tsc",
+    "start": "node dist/server.js",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio"
@@ -15,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx ./prisma/seed.ts"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
