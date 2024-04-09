@@ -11,6 +11,11 @@ async function getAllEvents(app) {
       schema: {
         summary: "Get all events",
         tags: ["events"],
+        querystring: z.object({
+          query: z.string().nullish(),
+          pageIndex: z.string().nullable().default("0").transform(Number),
+          perPage: z.string().nullable().default("10").transform(Number)
+        }),
         response: {
           200: z.object({
             events: z.array(
@@ -39,6 +44,7 @@ async function getAllEvents(app) {
       }
     },
     async (request, replay) => {
+      const { pageIndex, perPage, query } = request.query;
       const events = await prisma.event.findMany({
         select: {
           id: true,
@@ -54,7 +60,15 @@ async function getAllEvents(app) {
               attendees: true
             }
           }
-        }
+        },
+        where: query ? {
+          title: {
+            contains: query,
+            mode: "insensitive"
+          }
+        } : {},
+        take: perPage,
+        skip: pageIndex * perPage
       });
       return replay.send({
         events: events.map((event) => {

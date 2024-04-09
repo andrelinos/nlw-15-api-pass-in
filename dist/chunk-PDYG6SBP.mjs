@@ -52,7 +52,8 @@ async function getEventAttendees(app) {
         where: query ? {
           eventId,
           name: {
-            contains: query
+            contains: query,
+            mode: "insensitive"
           }
         } : {
           eventId

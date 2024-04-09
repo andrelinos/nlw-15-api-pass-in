@@ -1,18 +1,24 @@
 import {
+  deleteEvent
+} from "./chunk-IQDXAH2Q.mjs";
+import {
   getAllEvents
-} from "./chunk-LO5NQ2HD.mjs";
+} from "./chunk-LNHZFXSZ.mjs";
 import {
   attendeeBadge
 } from "./chunk-6TUUW65O.mjs";
 import {
   getEventAttendees
-} from "./chunk-U6ZPTKJG.mjs";
+} from "./chunk-PDYG6SBP.mjs";
 import {
   getEvent
 } from "./chunk-KWKVWBZA.mjs";
 import {
   registerForEvent
 } from "./chunk-6PTILMZZ.mjs";
+import {
+  updateEvent
+} from "./chunk-X6SF45Z2.mjs";
 import {
   env
 } from "./chunk-4JVYUT77.mjs";
@@ -64,6 +70,8 @@ app.register(createEvent);
 app.register(registerForEvent);
 app.register(getAllEvents);
 app.register(getEvent);
+app.register(updateEvent);
+app.register(deleteEvent);
 app.register(getEventAttendees);
 app.register(attendeeBadge);
 app.register(checkIn);
