@@ -12,11 +12,13 @@ import { env } from './env'
 import { errorHandler } from './error-handler'
 import { checkIn } from './routes/check-in'
 import { createEvent } from './routes/create-event'
+import { deleteEvent } from './routes/delete-event'
 import { getAllEvents } from './routes/get-all-events'
 import { attendeeBadge } from './routes/get-attendee-badge'
 import { getEvent } from './routes/get-event'
 import { getEventAttendees } from './routes/get-event-attendees'
 import { registerForEvent } from './routes/register-for-event'
+import { updateEvent } from './routes/update-event'
 
 const app = fastify()
 
@@ -49,6 +51,8 @@ app.register(createEvent)
 app.register(registerForEvent)
 app.register(getAllEvents)
 app.register(getEvent)
+app.register(updateEvent)
+app.register(deleteEvent)
 app.register(getEventAttendees)
 app.register(attendeeBadge)
 app.register(checkIn)
