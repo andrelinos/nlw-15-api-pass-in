@@ -18,12 +18,6 @@
 
 </p>
 
-<!-- Status -->
-
-<!-- <h4 align="center">
-	🚧  Nlw 15 Api Pass In 🚀 Under construction...  🚧
-</h4>
-
 <hr> -->
 
   [Sobre](#dart-sobre) &#xa0; | &#xa0;
@@ -137,208 +131,268 @@ npm run start
 
 </div>
 
-## API Documentation ##
+# Documentação da API pass.in
 
-Welcome to the API documentation for the pass.in application backend. This API is built during the NLW Unite event by Rocketseat.
+Especificações da API para o back-end da aplicação pass.in construída durante a NLW Unite da Rocketseat.
 
-### Base URL
+## Versão da API
 
-```
-https://api.passin.com
-```
+1.0.0
 
-****
+## Eventos
 
-### Authentication
+### Criar um Evento
 
-This API does not require authentication for now.
+Cria um novo evento.
 
-### Events
+- **URL**
+  `/events`
 
-#### Create an Event
+- **Método**
+  `POST`
 
-```
-POST /events
-```
+- **Parâmetros do Corpo da Requisição**
+    - `title` (string, mínimo de 4 caracteres) - O título do evento.
+    - `details` (string, opcional) - Detalhes adicionais sobre o evento.
+    - `eventStart` (string, formato de data e hora) - Data e hora de início do evento.
+    - `eventFinish` (string, formato de data e hora) - Data e hora de término do evento.
+    - `maximumAttendees` (integer, opcional) - O número máximo de participantes permitidos no evento.
 
-**Summary:** Create a new event.
+- **Resposta de Sucesso**
+    - Código: `201`
+    - Corpo:
 
-**Request Body:**
-
-```json
-{
-  "title": "Example Event",
-  "details": "This is an example event",
-  "eventStart": "2024-04-07T09:00:00Z",
-  "eventFinish": "2024-04-07T17:00:00Z",
-  "maximumAttendees": 100
-}
-```
-
-**Response:**
-
-```json
-{
-  "eventId": "123e4567-e89b-12d3-a456-426614174000"
-}
-```
-
-#### Get All Events
-
-```
-GET /events
-```
-
-**Summary:** Retrieve all events.
-
-**Response:**
-
-```json
-{
-  "events": [
+    ```json
     {
-      "id": "123e4567-e89b-12d3-a456-426614174000",
-      "title": "Example Event",
-      "slug": "example-event",
-      "details": "This is an example event",
-      "eventStart": "2024-04-07T09:00:00Z",
-      "eventFinish": "2024-04-07T17:00:00Z",
-      "maximumAttendees": 100,
-      "attendeesAmount": 10,
+      "eventId": "string (formato UUID)"
+    }
+    ```
+
+### Obter todos os Eventos
+
+Obtém todos os eventos ou filtra eventos com base em uma consulta opcional.
+
+- **URL**
+  `/events`
+
+- **Método**
+  `GET`
+
+- **Parâmetros da Consulta**
+    - `query` (string, opcional) - Consulta para filtrar eventos por título.
+    - `pageIndex` (string, opcional, padrão: `'0'`) - Índice da página para paginação.
+    - `perPage` (string, opcional, padrão: `'10'`) - Número de eventos por página.
+
+- **Resposta de Sucesso**
+    - Código: `200`
+    - Corpo:
+
+    ```json
+    {
+      "events": [
+        {
+          "id": "string (formato UUID)",
+          "title": "string",
+          "slug": "string",
+          "details": "string (opcional)",
+          "eventStart": "string (formato data e hora)",
+          "eventFinish": "string (formato data e hora)",
+          "maximumAttendees": "integer (opcional)",
+          "attendeesAmount": "integer",
+          "attendees": [
+            {
+              "id": "integer",
+              "name": "string",
+              "email": "string",
+              "createdAt": "string (formato data e hora)",
+              "checkedInAt": "string (formato data e hora, opcional)"
+            }
+          ]
+        }
+      ]
+    }
+    ```
+
+### Obter um Evento
+
+Obtém um evento específico com base no ID fornecido.
+
+- **URL**
+  `/events/{eventId}`
+
+- **Método**
+  `GET`
+
+- **Parâmetros da URL**
+    - `eventId` (string, formato de UUID) - O ID único do evento.
+
+- **Resposta de Sucesso**
+    - Código: `200`
+    - Corpo:
+
+    ```json
+    {
+      "event": {
+        "id": "string (formato UUID)",
+        "title": "string",
+        "slug": "string",
+        "details": "string (opcional)",
+        "eventStart": "string (formato data e hora)",
+        "eventFinish": "string (formato data e hora)",
+        "maximumAttendees": "integer (opcional)",
+        "attendeesAmount": "integer"
+      }
+    }
+    ```
+
+### Atualizar um Evento
+
+Atualiza um evento existente com base no ID fornecido.
+
+- **URL**
+  `/events/{eventId}`
+
+- **Método**
+  `PUT`
+
+- **Parâmetros da URL**
+    - `eventId` (string, formato de UUID) - O ID único do evento a ser atualizado.
+
+- **Parâmetros do Corpo da Requisição**
+    - `title` (string, mínimo de 4 caracteres) - O título atualizado do evento.
+    - `details` (string, opcional) - Detalhes atualizados sobre o evento.
+    - `eventStart` (string, formato de data e hora) - Data e hora de início atualizadas do evento.
+    - `eventFinish` (string, formato de data e hora) - Data e hora de término atualizadas do evento.
+    - `maximumAttendees` (integer, opcional) - O número máximo atualizado de participantes permitidos no evento.
+
+- **Resposta de Sucesso**
+    - Código: `200`
+
+### Excluir um Evento
+
+Exclui um evento existente com base no ID fornecido.
+
+- **URL**
+  `/events/{eventId}`
+
+- **Método**
+  `DELETE`
+
+- **Parâmetros da URL**
+    - `eventId` (string, formato de UUID) - O ID único do evento a ser excluído.
+
+- **Resposta de Sucesso**
+    - Código: `200`
+
+## Participantes (Attendees)
+
+### Registrar um Participante
+
+Registra um novo participante para um evento específico.
+
+- **URL**
+  `/events/{eventId}/attendees`
+
+- **Método**
+  `POST`
+
+- **Parâmetros do Corpo da Requisição**
+    - `name` (string, mínimo de 4 caracteres) - O nome do participante.
+    - `email` (string, formato de email) - O endereço de email do participante.
+
+- **Parâmetros da URL**
+    - `eventId` (string, formato de UUID) - O ID único do evento.
+
+- **Resposta de Sucesso**
+    - Código: `201`
+    - Corpo:
+
+    ```json
+    {
+      "attendeeId": "integer"
+    }
+    ```
+
+### Obter Participantes de um Evento
+
+Obtém todos os participantes de um evento específico.
+
+- **URL**
+  `/events/{eventId}/attendees`
+
+- **Método**
+  `GET`
+
+- **Parâmetros da Consulta**
+    - `query` (string, opcional) - Consulta para filtrar participantes por nome.
+    - `pageIndex` (string, opcional, padrão: `'0'`) - Índice da página para paginação.
+    - `perPage` (string, opcional, padrão: `'10'`) - Número de participantes por página.
+
+- **Parâmetros da URL**
+    - `eventId` (string, formato de UUID) - O ID único do evento.
+
+- **Resposta de Sucesso**
+    - Código: `200`
+    - Corpo:
+
+    ```json
+    {
       "attendees": [
         {
-          "id": 1,
-          "name": "John Doe",
-          "email": "john@example.com",
-          "createdAt": "2024-04-06T12:00:00Z",
-          "eventId": "123e4567-e89b-12d3-a456-426614174000"
-        },
-        ...
+          "id": "integer",
+          "name": "string",
+          "email": "string",
+          "createdAt": "string (formato data e hora)",
+          "checkedInAt": "string (formato data e hora, opcional)"
+        }
       ]
-    },
-    ...
-  ]
-}
-```
+    }
+    ```
 
-#### Get Event by ID
+### Obter um Participante
 
-```
-GET /events/{eventId}
-```
+Obtém informações sobre um participante específico com base no ID fornecido.
 
-**Summary:** Retrieve an event by ID.
+- **URL**
+  `/attendees/{attendeeId}`
 
-**Response:**
+- **Método**
+  `GET`
 
-```json
-{
-  "event": {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "title": "Example Event",
-    "slug": "example-event",
-    "details": "This is an example event",
-    "eventStart": "2024-04-07T09:00:00Z",
-    "eventFinish": "2024-04-07T17:00:00Z",
-    "maximumAttendees": 100,
-    "attendeesAmount": 10
-  }
-}
-```
+- **Parâmetros da URL**
+    - `attendeeId` (integer) - O ID único do participante.
 
-#### Register an Attendee
+- **Resposta de Sucesso**
+    - Código: `200`
+    - Corpo:
 
-```
-POST /events/{eventId}/attendees
-```
-
-**Summary:** Register an attendee for an event.
-
-**Request Body:**
-
-```json
-{
-  "name": "John Doe",
-  "email": "john@example.com"
-}
-```
-
-**Response:**
-
-```json
-{
-  "attendeeId": 1
-}
-```
-
-#### Get Event Attendees
-
-```
-GET /events/{eventId}/attendees
-```
-
-**Summary:** Retrieve attendees for a specific event.
-
-**Response:**
-
-```json
-{
-  "attendees": [
+    ```json
     {
-      "id": 1,
-      "name": "John Doe",
-      "email": "john@example.com",
-      "createdAt": "2024-04-06T12:00:00Z",
-      "checkedInAt": "2024-04-07T09:30:00Z"
-    },
-    ...
-  ]
-}
-```
+      "attendee": {
+        "id": "integer",
+        "name": "string",
+        "email": "string",
+        "createdAt": "string (formato data e hora)",
+        "checkedInAt": "string (formato data e hora, opcional)"
+      }
+    }
+    ```
 
-### Attendees
+### Marcar Check-in de um Participante
 
-#### Get Attendee Badge
+Marca o check-in de um participante em um evento.
 
-```
-GET /attendees/{attendeeId}/badge
-```
+- **URL**
+  `/attendees/{attendeeId}/check-in`
 
-**Summary:** Retrieve attendee badge.
+- **Método**
+  `GET`
 
-**Response:**
+- **Parâmetros da URL**
+    - `attendeeId` (integer) - O ID único do participante.
 
-```json
-{
-  "badge": {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "eventTitle": "Example Event",
-    "eventStart": "2024-04-07T09:00:00Z",
-    "eventFinish": "2024-04-07T17:00:00Z",
-    "checkInURL": "https://api.passin.com/attendees/1/check-in"
-  }
-}
-```
-
-#### Check-in an Attendee
-
-```
-GET /attendees/{attendeeId}/check-in
-```
-
-**Summary:** Check-in an attendee.
-
-**Response:** 201 Created (No Content)
-
-### Additional Notes
-
-- All requests and responses are in JSON format.
-- Dates and times are represented in ISO 8601 format.
-- Attendees are registered with a unique attendee ID.
-- Events are identified by their unique event ID.
-
-Feel free to reach out if you have any questions or need further assistance!
+- **Resposta de Sucesso**
+    - Código: `201`
 
 ## :memo: Licença ##
 
