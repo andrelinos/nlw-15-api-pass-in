@@ -11,6 +11,11 @@ export async function getAllEvents(app: FastifyInstance) {
       schema: {
         summary: 'Get all events',
         tags: ['events'],
+        querystring: z.object({
+          query: z.string().nullish(),
+          pageIndex: z.string().nullable().default('0').transform(Number),
+          perPage: z.string().nullable().default('10').transform(Number),
+        }),
         response: {
           200: z.object({
             events: z.array(
@@ -39,6 +44,8 @@ export async function getAllEvents(app: FastifyInstance) {
       },
     },
     async (request, replay) => {
+      const { pageIndex, perPage, query } = request.query
+
       const events = await prisma.event.findMany({
         select: {
           id: true,
@@ -55,11 +62,17 @@ export async function getAllEvents(app: FastifyInstance) {
             },
           },
         },
+        where: query
+          ? {
+              title: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            }
+          : {},
+        take: perPage,
+        skip: pageIndex * perPage,
       })
-
-      // if (!events) {
-      //   throw new Error('No events not found')
-      // }
 
       return replay.send({
         events: events.map((event) => {

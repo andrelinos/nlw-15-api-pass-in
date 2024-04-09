@@ -55,6 +55,7 @@ export async function getEventAttendees(app: FastifyInstance) {
               eventId,
               name: {
                 contains: query,
+                mode: 'insensitive',
               },
             }
           : {
